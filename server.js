@@ -20,6 +20,11 @@ app.use(cors());
 
 
 //controllers
+
+app.get('/', (req, res) => {
+	res.send('it is working')
+})
+
 app.post('/register', (req,res) => {
 	const {name, address, email, password} = req.body;
 	const hash = bcrypt.hashSync(password);
