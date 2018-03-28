@@ -18,11 +18,6 @@ app.use(cors());
 
 
 //controllers
-
-app.get('/', (req, res) => {
-	res.send('it is working')
-})
-
 app.post('/register', (req,res) => {
 	const {name, address, email, password} = req.body;
 	const hash = bcrypt.hashSync(password);
@@ -72,11 +67,29 @@ app.post('/signin', (req, res) => {
 })
 
 app.get('/jobsbulakan', (req, res) => {
-	db.select('*').from('jobs').then(data => res.json(data))
+	db.select('*').from('jobs').orderBy('id').then(data => res.json(data))
 })
 
 app.get('/jobsbulakancount', (req, res) => {
-	db('jobs').count('id')
+	db('balagtasjobs').count('id')
+	.then(count => res.json(count[0]));
+})
+
+app.get('/jobsbalagtas', (req, res) => {
+	db.select('*').from('balagtasjobs').orderBy('id').then(data => res.json(data))
+})
+
+app.get('/jobsbalagtascount', (req, res) => {
+	db('balagtasjobs').count('id')
+	.then(count => res.json(count[0]));
+})
+
+app.get('/jobsmalolos', (req, res) => {
+	db.select('*').from('malolosjobs').orderBy('id').then(data => res.json(data))
+})
+
+app.get('/jobsmaloloscount', (req, res) => {
+	db('malolosjobs').count('id')
 	.then(count => res.json(count[0]));
 })
 
